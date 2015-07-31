@@ -1,0 +1,27 @@
+/* CSS declarations go here */
+
+body {
+    color: #555;
+    font-size: 90%;
+    font-family: sans-serif;
+}
+
+table {
+    margin: 20px 0;
+    width: 100%;
+}
+
+td {
+    border-bottom: solid 1px #eee;
+    padding: 5px;
+    text-align: left;
+}
+
+th {
+    text-align: left;
+}
+
+.bar {
+    background: #eee;
+    padding: 10px;
+}

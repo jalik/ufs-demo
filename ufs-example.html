@@ -1,0 +1,56 @@
+<head>
+    <title>ufs-example</title>
+</head>
+
+<body>
+<h1>UFS Example</h1>
+
+{{> uploadForm}}
+
+</body>
+
+<template name="uploadForm">
+    <form>
+        <div class="bar">
+            <input type="file">
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Extension</th>
+                <th>Uploading</th>
+                <th>Complete</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each files}}
+                {{> file}}
+            {{/each}}
+            </tbody>
+        </table>
+    </form>
+</template>
+
+<template name="file">
+    <tr>
+        <td>
+            {{#if uploading}}
+                <img src="/spinner.gif" width="64" height="64">
+            {{else}}
+                <img src="{{url}}" width="64" height="64">
+            {{/if}}
+        </td>
+        <td>{{name}}</td>
+        <td>{{type}}</td>
+        <td>{{extension}}</td>
+        <td>{{uploading}}</td>
+        <td>{{complete}}</td>
+        <td>
+            <button name="delete">×</button>
+        </td>
+    </tr>
+</template>
