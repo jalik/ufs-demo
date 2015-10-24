@@ -1,3 +1,10 @@
+// Slow down the transfer to simulate slow connection
+UploadFS.config.simulateWriteDelay = 3000;
+
+/**
+ * The collection that contains file meta-data (name, size, url...)
+ * @type {Mongo.Collection}
+ */
 Files = new Mongo.Collection('files');
 
 Files.allow({
@@ -12,27 +19,38 @@ Files.allow({
     }
 });
 
+/**
+ * The Store that contains files
+ * @type {UploadFS.store.Local}
+ */
 FilesStore = new UploadFS.store.Local({
     name: 'files',
     collection: Files
 });
 
+
 if (Meteor.isClient) {
+
+    window.uploader = null;
+
     Template.uploadForm.events({
         'change [type=file]': function (ev) {
             UploadFS.readAsArrayBuffer(ev, function (data, file) {
-                new UploadFS.Uploader({
+                window.uploader = new UploadFS.Uploader({
                     data: data,
                     file: file,
                     store: FilesStore
-                }).start();
+                });
+                uploader.start();
             });
         }
     });
 
     Template.uploadForm.helpers({
         files: function () {
-            return Files.find({}, {sort: {createdAt: -1}});
+            return Files.find({}, {
+                sort: {createdAt: 1}
+            });
         }
     });
 

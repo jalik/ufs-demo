@@ -18,10 +18,32 @@ td {
 }
 
 th {
+    border-bottom: solid 2px #ddd;
+    padding: 5px;
     text-align: left;
+}
+
+button {
+    background: #888;
+    border: none;
+    border-radius: 3px;
+    color: #eee;
+    cursor: pointer;
+    padding: 5px;
+}
+
+button:hover {
+    background: #aaa;
+    color: #fff;
 }
 
 .bar {
     background: #eee;
     padding: 10px;
+}
+
+#page {
+    margin: 20px auto;
+    max-width: 800px;
+    width: 100%;
 }

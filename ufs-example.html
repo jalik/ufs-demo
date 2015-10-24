@@ -3,10 +3,10 @@
 </head>
 
 <body>
-<h1>UFS Example</h1>
-
-{{> uploadForm}}
-
+<div id="page">
+    <h1>UFS Example</h1>
+    {{> uploadForm}}
+</div>
 </body>
 
 <template name="uploadForm">
@@ -50,7 +50,7 @@
         <td>{{uploading}}</td>
         <td>{{complete}}</td>
         <td>
-            <button name="delete">×</button>
+            <button name="delete" type="button">Delete</button>
         </td>
     </tr>
 </template>
