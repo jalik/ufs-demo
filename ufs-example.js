@@ -59,4 +59,19 @@ if (Meteor.isClient) {
             Files.remove(this._id);
         }
     });
+
+    Template.file.helpers({
+        formatSize: function (bytes) {
+            if (bytes >= 1000000000) {
+                return Math.round(bytes / 1000000000) + ' GB';
+            }
+            if (bytes >= 1000000) {
+                return Math.round(bytes / 1000000) + ' MB';
+            }
+            if (bytes >= 1000) {
+                return Math.round(bytes / 1000) + ' KB';
+            }
+            return bytes + ' B';
+        }
+    });
 }

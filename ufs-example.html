@@ -21,6 +21,7 @@
                 <th>Name</th>
                 <th>Type</th>
                 <th>Extension</th>
+                <th>Size</th>
                 <th>Uploading</th>
                 <th>Complete</th>
                 <th>Actions</th>
@@ -29,6 +30,10 @@
             <tbody>
             {{#each files}}
                 {{> file}}
+            {{else}}
+                <tr>
+                    <td colspan="8" style="text-align: center">No file</td>
+                </tr>
             {{/each}}
             </tbody>
         </table>
@@ -47,6 +52,7 @@
         <td>{{name}}</td>
         <td>{{type}}</td>
         <td>{{extension}}</td>
+        <td style="white-space: nowrap">{{formatSize size}}</td>
         <td>{{uploading}}</td>
         <td>{{complete}}</td>
         <td>
