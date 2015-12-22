@@ -6,6 +6,21 @@ body {
     font-family: sans-serif;
 }
 
+a {
+    color: dodgerblue;
+    text-decoration: none;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+
+a:focus, a:hover {
+    color: deepskyblue;
+    text-decoration: underline;
+}
+
 table {
     margin: 20px 0;
     width: 100%;
