@@ -46,7 +46,18 @@
             {{#if uploading}}
                 <img src="/spinner.gif" width="64" height="64">
             {{else}}
-                <img src="{{url}}" width="64" height="64">
+                {{#if isAudio}}
+                    <audio src="{{url}}" controls></audio>
+                {{/if}}
+                {{#if isImage}}
+                    <img src="{{url}}" width="64" height="64">
+                {{/if}}
+                {{#if isText}}
+                    <img src="/file.png" width="64" height="64">
+                {{/if}}
+                {{#if isVideo}}
+                    <video src="{{url}}" controls width="64" height="64"></video>
+                {{/if}}
             {{/if}}
         </td>
         <td><a href="{{url}}" target="_blank">{{name}}</a></td>
