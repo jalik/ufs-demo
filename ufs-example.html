@@ -44,16 +44,16 @@
     <tr>
         <td>
             {{#if uploading}}
-                <img src="/spinner.gif" width="64" height="64">
+                <img src="/spinner.gif" width="48" height="48">
             {{else}}
                 {{#if isAudio}}
                     <audio src="{{url}}" controls></audio>
                 {{/if}}
                 {{#if isImage}}
-                    <img src="{{url}}" width="64" height="64">
+                    <img src="{{thumb.url}}">
                 {{/if}}
                 {{#if isText}}
-                    <img src="/file.png" width="64" height="64">
+                    <img src="/file.png" width="48" height="48">
                 {{/if}}
                 {{#if isVideo}}
                     <video src="{{url}}" controls width="64" height="64"></video>

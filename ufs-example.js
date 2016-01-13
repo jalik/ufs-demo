@@ -1,5 +1,5 @@
 // Slow down the transfer to simulate slow connection
-UploadFS.config.simulateWriteDelay = 3000;
+UploadFS.config.simulateWriteDelay = 1000;
 
 /**
  * The collection that contains file meta-data (name, size, url...)
@@ -20,12 +20,98 @@ Files.allow({
 });
 
 /**
+ * The thumbnails collection
+ * @type {Mongo.Collection}
+ */
+Thumbs64 = new Mongo.Collection('thumbs64');
+
+Thumbs64.allow({
+    insert: function () {
+        return false;
+    },
+    update: function () {
+        return false;
+    },
+    remove: function () {
+        return false;
+    }
+});
+
+/**
+ * The thumbnails collection
+ * @type {Mongo.Collection}
+ */
+Thumbs48 = new Mongo.Collection('thumbs48');
+
+Thumbs48.allow({
+    insert: function () {
+        return false;
+    },
+    update: function () {
+        return false;
+    },
+    remove: function () {
+        return false;
+    }
+});
+
+/**
  * The Store that contains files
  * @type {UploadFS.store.Local}
  */
 FilesStore = new UploadFS.store.Local({
+    collection: Files,
     name: 'files',
-    collection: Files
+    path: '/uploads/files',
+    copyTo: [
+        new UploadFS.store.Local({
+            collection: Thumbs64,
+            name: 'thumbs64',
+            path: '/uploads/thumbs_64',
+            transformWrite: function (from, to, fileId, file) {
+                // Resize images
+                if (file.type.indexOf('image/') === 0) {
+                    var gm = Npm.require('gm');
+                    if (gm) {
+                        gm(from)
+                            .resize(64, 64)
+                            .gravity('Center')
+                            .extent(64, 64)
+                            .quality(75)
+                            .stream().pipe(to);
+                    } else {
+                        from.pipe(to);
+                    }
+                } else {
+                    from.pipe(to);
+                }
+            },
+            copyTo: []
+        }),
+        new UploadFS.store.Local({
+            collection: Thumbs48,
+            name: 'thumbs48',
+            path: '/uploads/thumbs_48',
+            transformWrite: function (from, to, fileId, file) {
+                // Resize images
+                if (file.type.indexOf('image/') === 0) {
+                    var gm = Npm.require('gm');
+                    if (gm) {
+                        gm(from)
+                            .resize(48, 48)
+                            .gravity('Center')
+                            .extent(48, 48)
+                            .quality(75)
+                            .stream().pipe(to);
+                    } else {
+                        from.pipe(to);
+                    }
+                } else {
+                    from.pipe(to);
+                }
+            }
+        })
+    ]
 });
 
 
@@ -72,6 +158,9 @@ if (Meteor.isClient) {
                 return Math.round(bytes / 1000) + ' KB';
             }
             return bytes + ' B';
+        },
+        thumb: function () {
+            return Thumbs64.findOne({originalId: this._id});
         }
     });
 }
