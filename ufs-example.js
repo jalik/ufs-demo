@@ -1,5 +1,6 @@
 // Slow down the transfer to simulate slow connection
-UploadFS.config.simulateWriteDelay = 1000;
+UploadFS.config.simulateUploadDelay = 0;
+UploadFS.config.simulateWriteDelay = 500;
 
 /**
  * The collection that contains file meta-data (name, size, url...)
@@ -56,6 +57,24 @@ Thumbs48.allow({
 });
 
 /**
+ * The thumbnails collection
+ * @type {Mongo.Collection}
+ */
+Thumbs24 = new Mongo.Collection('thumbs24');
+
+Thumbs24.allow({
+    insert: function () {
+        return false;
+    },
+    update: function () {
+        return false;
+    },
+    remove: function () {
+        return false;
+    }
+});
+
+/**
  * The Store that contains files
  * @type {UploadFS.store.Local}
  */
@@ -86,7 +105,31 @@ FilesStore = new UploadFS.store.Local({
                     from.pipe(to);
                 }
             },
-            copyTo: []
+            copyTo: [
+                new UploadFS.store.Local({
+                    collection: Thumbs24,
+                    name: 'thumbs24',
+                    path: '/uploads/thumbs_24',
+                    transformWrite: function (from, to, fileId, file) {
+                        // Resize images
+                        if (file.type.indexOf('image/') === 0) {
+                            var gm = Npm.require('gm');
+                            if (gm) {
+                                gm(from)
+                                    .resize(24, 24)
+                                    .gravity('Center')
+                                    .extent(24, 24)
+                                    .quality(75)
+                                    .stream().pipe(to);
+                            } else {
+                                from.pipe(to);
+                            }
+                        } else {
+                            from.pipe(to);
+                        }
+                    }
+                })
+            ]
         }),
         new UploadFS.store.Local({
             collection: Thumbs48,
@@ -135,7 +178,7 @@ if (Meteor.isClient) {
     Template.uploadForm.helpers({
         files: function () {
             return Files.find({}, {
-                sort: {createdAt: 1}
+                sort: {createdAt: 1, name: 1}
             });
         }
     });
