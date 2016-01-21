@@ -1,5 +1,4 @@
 // Slow down the transfer to simulate slow connection
-UploadFS.config.simulateUploadDelay = 0;
 UploadFS.config.simulateWriteDelay = 500;
 
 /**
@@ -87,6 +86,9 @@ FilesStore = new UploadFS.store.Local({
             collection: Thumbs64,
             name: 'thumbs64',
             path: '/uploads/thumbs_64',
+            filter: new UploadFS.Filter({
+                extensions: ['gif', 'jpg', 'png']
+            }),
             transformWrite: function (from, to, fileId, file) {
                 // Resize images
                 if (file.type.indexOf('image/') === 0) {
@@ -110,6 +112,9 @@ FilesStore = new UploadFS.store.Local({
                     collection: Thumbs24,
                     name: 'thumbs24',
                     path: '/uploads/thumbs_24',
+                    filter: new UploadFS.Filter({
+                        extensions: ['gif', 'jpg', 'png']
+                    }),
                     transformWrite: function (from, to, fileId, file) {
                         // Resize images
                         if (file.type.indexOf('image/') === 0) {
@@ -160,18 +165,40 @@ FilesStore = new UploadFS.store.Local({
 
 if (Meteor.isClient) {
 
-    window.uploader = null;
+    window.workers = {};
 
     Template.uploadForm.events({
-        'change [type=file]': function (ev) {
-            UploadFS.readAsArrayBuffer(ev, function (data, file) {
-                window.uploader = new UploadFS.Uploader({
-                    data: data,
-                    file: file,
-                    store: FilesStore
+        'click [name=upload]': function (ev, tpl) {
+            ev.preventDefault();
+
+            var callback = function (ev) {
+                UploadFS.readAsArrayBuffer(ev, function (data, file) {
+                    var uploader = new UploadFS.Uploader({
+                        data: data,
+                        file: file,
+                        store: FilesStore
+                    });
+
+                    // Remove uploader on complete
+                    uploader.onComplete = function () {
+                        delete workers[file.name];
+                    };
+                    // Remember uploader
+                    tpl.autorun(function () {
+                        uploader.getProgress();
+                        if (uploader.getFile()._id) {
+                            workers[uploader.getFile()._id] = uploader;
+                        }
+                    });
+                    uploader.start();
                 });
-                uploader.start();
-            });
+            };
+
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.multiple = true;
+            input.onchange = callback;
+            input.click();
         }
     });
 
@@ -185,7 +212,20 @@ if (Meteor.isClient) {
 
     Template.file.events({
         'click [name=delete]': function (ev) {
+            ev.preventDefault();
             Files.remove(this._id);
+        },
+        'click [name=abort]': function (ev) {
+            ev.preventDefault();
+            workers[this._id].abort();
+        },
+        'click [name=stop]': function (ev) {
+            ev.preventDefault();
+            workers[this._id].stop();
+        },
+        'click [name=start]': function (ev) {
+            ev.preventDefault();
+            workers[this._id].start();
         }
     });
 

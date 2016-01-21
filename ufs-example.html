@@ -12,7 +12,7 @@
 <template name="uploadForm">
     <form>
         <div class="bar">
-            <input type="file" multiple>
+            <button name="upload" type="button">Upload</button>
         </div>
         <table>
             <thead>
@@ -64,7 +64,16 @@
         <td>{{type}}</td>
         <td>{{extension}}</td>
         <td style="white-space: nowrap">{{formatSize size}}</td>
-        <td>{{uploading}}</td>
+        <td>
+            {{#unless complete}}
+                {{#if uploading}}
+                    <button name="stop" type="button">Stop</button>
+                {{else}}
+                    <button name="start" type="button">Start</button>
+                {{/if}}
+                <button name="abort" type="button">Abort</button>
+            {{/unless}}
+        </td>
         <td>{{complete}}</td>
         <td>
             <button name="delete" type="button">Delete</button>
