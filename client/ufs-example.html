@@ -19,12 +19,11 @@
             <tr>
                 <th></th>
                 <th>Name</th>
-                <th>Type</th>
-                <th>Extension</th>
-                <th>Size</th>
-                <th>Uploading</th>
-                <th>Complete</th>
-                <th>Actions</th>
+                <th width="10%">Type</th>
+                <th width="10%">Extension</th>
+                <th width="10%" style="text-align: right">Size</th>
+                <th width="10%" style="text-align: right">Progress</th>
+                <th width="15%" style="text-align: right">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -32,7 +31,7 @@
                 {{> file}}
             {{else}}
                 <tr>
-                    <td colspan="8" style="text-align: center">No file</td>
+                    <td colspan="7" style="text-align: center">No file</td>
                 </tr>
             {{/each}}
             </tbody>
@@ -42,7 +41,7 @@
 
 <template name="file">
     <tr>
-        <td>
+        <td style="text-align: center">
             {{#if uploading}}
                 <img src="/spinner.gif" width="48" height="48">
             {{else}}
@@ -63,8 +62,11 @@
         <td><a href="{{url}}" target="_blank">{{name}}</a></td>
         <td>{{type}}</td>
         <td>{{extension}}</td>
-        <td style="white-space: nowrap">{{formatSize size}}</td>
-        <td>
+        <td style="text-align: right; white-space: nowrap">{{formatSize size}}</td>
+        <td style="text-align: right">
+            {{progress}}%
+        </td>
+        <td style="text-align: right">
             {{#unless complete}}
                 {{#if uploading}}
                     <button name="stop" type="button">Stop</button>
@@ -73,9 +75,6 @@
                 {{/if}}
                 <button name="abort" type="button">Abort</button>
             {{/unless}}
-        </td>
-        <td>{{complete}}</td>
-        <td>
             <button name="delete" type="button">Delete</button>
         </td>
     </tr>

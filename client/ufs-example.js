@@ -1,5 +1,5 @@
 // Slow down the transfer to simulate slow connection
-UploadFS.config.simulateWriteDelay = 500;
+UploadFS.config.simulateWriteDelay = 0;
 
 window.workers = {};
 
@@ -7,34 +7,27 @@ Template.uploadForm.events({
     'click [name=upload]': function (ev, tpl) {
         ev.preventDefault();
 
-        var callback = function (ev) {
-            UploadFS.readAsArrayBuffer(ev, function (data, file) {
-                var uploader = new UploadFS.Uploader({
-                    data: data,
-                    file: file,
-                    store: FilesStore
-                });
-
-                // Remove uploader on complete
-                uploader.onComplete = function () {
-                    delete workers[file.name];
-                };
-                // Remember uploader
-                tpl.autorun(function () {
-                    uploader.getProgress();
-                    if (uploader.getFile()._id) {
-                        workers[uploader.getFile()._id] = uploader;
-                    }
-                });
-                uploader.start();
+        UploadFS.selectFiles(function (file) {
+            var uploader = new UploadFS.Uploader({
+                chunkSize: 5 * 1024 * 1000,
+                maxChunkSize: 5 * 1024 * 1000,
+                data: file,
+                file: file,
+                store: FilesStore
             });
-        };
-
-        var input = document.createElement('input');
-        input.type = 'file';
-        input.multiple = true;
-        input.onchange = callback;
-        input.click();
+            uploader.onCreate = function (file) {
+                workers[file._id] = this;
+            };
+            uploader.onProgress = function (file, progress) {
+                console.log(file.name + ' :'
+                    + "\n" + (progress * 100).toFixed(2) + '%'
+                    + "\n" + (this.getSpeed() / 1024).toFixed(2) + 'KB/s'
+                    + "\n" + 'elapsed: ' + (this.getElapsedTime() / 1000).toFixed(2) + 's'
+                    + "\n" + 'remaining: ' + (this.getRemainingTime() / 1000).toFixed(2) + 's'
+                );
+            };
+            uploader.start();
+        });
     }
 });
 
@@ -68,15 +61,18 @@ Template.file.events({
 Template.file.helpers({
     formatSize: function (bytes) {
         if (bytes >= 1000000000) {
-            return Math.round(bytes / 1000000000) + ' GB';
+            return (bytes / 1000000000).toFixed(2) + ' GB';
         }
         if (bytes >= 1000000) {
-            return Math.round(bytes / 1000000) + ' MB';
+            return (bytes / 1000000).toFixed(2) + ' MB';
         }
         if (bytes >= 1000) {
-            return Math.round(bytes / 1000) + ' KB';
+            return (bytes / 1000).toFixed(2) + ' KB';
         }
         return bytes + ' B';
+    },
+    progress: function () {
+        return (this.progress * 100).toFixed(2);
     },
     thumb: function () {
         return Thumbs64.findOne({originalId: this._id});
