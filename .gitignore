@@ -4,5 +4,4 @@
 .meteor/meteorite
 
 .idea
-
-packages
+packages/jalik-*
