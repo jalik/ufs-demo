@@ -8,15 +8,28 @@ Template.uploadForm.events({
         ev.preventDefault();
 
         UploadFS.selectFiles(function (file) {
-            var uploader = new UploadFS.Uploader({
-                chunkSize: 5 * 1024 * 1000,
-                maxChunkSize: 5 * 1024 * 1000,
+            const ONE_MB = 1024 * 100;
+            let uploader = new UploadFS.Uploader({
+                adaptive: false,
+                chunkSize: ONE_MB * 16.66,
+                maxChunkSize: ONE_MB * 20,
                 data: file,
                 file: file,
-                store: FilesStore
+                store: FilesStore,
+                maxTries: 3
             });
+            uploader.onAbort = function (file) {
+                console.log(file.name + ' upload aborted');
+            };
+            uploader.onComplete = function (file) {
+                console.log(file.name + ' upload completed');
+            };
             uploader.onCreate = function (file) {
+                console.log(file.name + ' created');
                 workers[file._id] = this;
+            };
+            uploader.onError = function (err, file) {
+                console.error(file.name + ' could not be uploaded', err);
             };
             uploader.onProgress = function (file, progress) {
                 console.log(file.name + ' :'
