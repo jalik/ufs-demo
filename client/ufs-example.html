@@ -3,8 +3,11 @@
 </head>
 
 <body>
+<div id="login-bar">{{> loginButtons}}</div>
 <div id="page">
     <h1>UFS Example</h1>
+    <p class="help">In this demo, when you are logged in you can access and delete files that you have uploaded and
+        files that are public. If you log out you won't be able to delete any files or access private files.</p>
     {{> uploadForm}}
 </div>
 </body>
@@ -12,7 +15,9 @@
 <template name="uploadForm">
     <form>
         <div class="bar">
-            <button name="upload" type="button">Upload</button>
+            <button name="upload" type="button" class="btn-upload">Upload</button>
+            <input type="url" name="url" placeholder="http://">
+            <button name="import" type="button" class="btn-upload">Import from URL</button>
         </div>
         <table>
             <thead>
@@ -23,6 +28,7 @@
                 <th width="10%">Extension</th>
                 <th width="10%" style="text-align: right">Size</th>
                 <th width="10%" style="text-align: right">Progress</th>
+                <th width="10%" style="text-align: right">Access</th>
                 <th width="15%" style="text-align: right">Actions</th>
             </tr>
             </thead>
@@ -31,7 +37,7 @@
                 {{> file}}
             {{else}}
                 <tr>
-                    <td colspan="7" style="text-align: center">No file</td>
+                    <td colspan="8" style="text-align: center">No file</td>
                 </tr>
             {{/each}}
             </tbody>
@@ -43,23 +49,24 @@
     <tr>
         <td style="text-align: center">
             {{#if uploading}}
-                <img src="/spinner.gif" width="48" height="48">
+                <img src="/spinner.gif" width="48" height="48" class="thumbnail">
             {{else}}
                 {{#if isAudio}}
-                    <audio src="{{url}}" controls></audio>
+                    <audio src="{{url}}?token={{token}}" controls></audio>
                 {{/if}}
                 {{#if isImage}}
-                    <img src="{{thumb.url}}">
+                    <img src="{{thumb.url}}?token={{thumb.token}}" class="thumbnail">
                 {{/if}}
                 {{#if isText}}
-                    <img src="/file.png" width="48" height="48">
+                    <img src="/file.png" width="48" height="48" class="thumbnail">
                 {{/if}}
                 {{#if isVideo}}
-                    <video src="{{url}}" controls width="64" height="64"></video>
+                    <video src="{{url}}?token={{token}}" controls width="64" height="64"
+                           class="thumbnail"></video>
                 {{/if}}
             {{/if}}
         </td>
-        <td><a href="{{url}}" target="_blank">{{name}}</a></td>
+        <td><a href="{{url}}?token={{token}}" target="_blank">{{name}}</a></td>
         <td>{{type}}</td>
         <td>{{extension}}</td>
         <td style="text-align: right; white-space: nowrap">{{formatSize size}}</td>
@@ -67,15 +74,26 @@
             {{progress}}%
         </td>
         <td style="text-align: right">
-            {{#unless complete}}
-                {{#if uploading}}
-                    <button name="stop" type="button">Stop</button>
-                {{else}}
-                    <button name="start" type="button">Start</button>
-                {{/if}}
-                <button name="abort" type="button">Abort</button>
-            {{/unless}}
-            <button name="delete" type="button">Delete</button>
+            {{#if userId}}
+                <span class="private-access">Private</span>
+            {{else}}
+                <span class="public-access">Public</span>
+            {{/if}}
+        </td>
+        <td style="text-align: right">
+            {{#if canAbort}}
+                {{#unless complete}}
+                    {{#if uploading}}
+                        <button name="stop" type="button">Stop</button>
+                    {{else}}
+                        <button name="start" type="button">Start</button>
+                    {{/if}}
+                    <button name="abort" type="button">Abort</button>
+                {{/unless}}
+            {{/if}}
+            {{#if canDelete}}
+                <button class="btn-delete" name="delete" type="button">Delete</button>
+            {{/if}}
         </td>
     </tr>
 </template>

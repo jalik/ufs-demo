@@ -1,0 +1,23 @@
+{
+  "name": "ufs-example",
+  "version": "0.1.0",
+  "description": "Demo package for UploadFS",
+  "main": "client/ufs-example.js",
+  "dependencies": {
+    "gm": "^1.22.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jalik/ufs-example.git"
+  },
+  "keywords": [
+    "ufs"
+  ],
+  "author": "Karl STEIN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jalik/ufs-example/issues"
+  },
+  "homepage": "https://github.com/jalik/ufs-example#readme"
+}

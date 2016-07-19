@@ -4,6 +4,19 @@ UploadFS.config.simulateWriteDelay = 0;
 window.workers = {};
 
 Template.uploadForm.events({
+    'click [name=import]': function (ev, tpl) {
+        ev.preventDefault();
+
+        let url = tpl.$('[name=url]').val();
+        UploadFS.importFromURL(url, {}, FileStore, function (err, file) {
+            if (err) {
+                console.error(err);
+            } else if (file) {
+                tpl.$('[name=url]').val('');
+                console.log('file successfully imported : ', file);
+            }
+        });
+    },
     'click [name=upload]': function (ev, tpl) {
         ev.preventDefault();
 
@@ -15,7 +28,7 @@ Template.uploadForm.events({
                 maxChunkSize: ONE_MB * 20,
                 data: file,
                 file: file,
-                store: FilesStore,
+                store: FileStore,
                 maxTries: 3
             });
             uploader.onAbort = function (file) {
@@ -52,6 +65,15 @@ Template.uploadForm.helpers({
     }
 });
 
+Template.uploadForm.onRendered(function () {
+    let tpl = this;
+
+    tpl.autorun(function () {
+        let userId = Meteor.userId();
+        tpl.subscribe('files');
+    });
+});
+
 Template.file.events({
     'click [name=delete]': function (ev) {
         ev.preventDefault();
@@ -72,6 +94,13 @@ Template.file.events({
 });
 
 Template.file.helpers({
+    canAbort: function () {
+        return workers.hasOwnProperty(this._id);
+    },
+    canDelete: function () {
+        let userId = Meteor.userId();
+        return userId && (userId === this.userId || !this.userId);
+    },
     formatSize: function (bytes) {
         if (bytes >= 1000000000) {
             return (bytes / 1000000000).toFixed(2) + ' GB';
@@ -88,6 +117,6 @@ Template.file.helpers({
         return (this.progress * 100).toFixed(2);
     },
     thumb: function () {
-        return Thumbs64.findOne({originalId: this._id});
+        return Thumbnails.findOne({originalId: this._id});
     }
 });

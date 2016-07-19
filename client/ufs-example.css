@@ -61,3 +61,38 @@ button:hover {
 #page {
     width: 100%;
 }
+
+.thumbnail {
+    width: 48px;
+    height: auto;
+}
+
+.btn-delete {
+    background-color: #c90000;
+    color: #fff;
+}
+
+.btn-upload {
+    background-color: #009900;
+    color: #fff;
+}
+
+#login-bar {
+    border-bottom: solid 1px #ddd;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+.help {
+    color: #888;
+    padding: 10px;
+    line-height: 1.3em;
+}
+
+.private-access {
+    color: #c94501;
+}
+
+.public-access {
+    color: #009900;
+}
