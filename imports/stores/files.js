@@ -23,8 +23,8 @@ import {UploadFS} from 'meteor/jalik:ufs';
  */
 FileFilter = new UploadFS.Filter({
     minSize: 1,
-    maxSize: 1024 * 1000 * 10, // 10MB,
-    contentTypes: ['image/*', 'audio/*', 'video/*']
+    // maxSize: 1024 * 1000 * 10, // 10MB,
+    contentTypes: ['image/*', 'audio/*', 'video/*', 'application/*']
 });
 
 /**

@@ -28,3 +28,5 @@ accounts-ui@1.1.9
 ecmascript
 jalik:ufs-cloudinary
 jalik:ufs-gridfs
+huttonr:bootstrap3
+jalik:i18n

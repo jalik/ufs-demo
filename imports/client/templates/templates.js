@@ -1,4 +1,32 @@
+import {Meteor} from 'meteor/meteor';
+import {UploadFS} from 'meteor/jalik:ufs';
+
 window.workers = {};
+
+let deleteFiles = function (filter) {
+    Meteor.call('deleteFiles', filter, function (err, result) {
+        if (err) {
+            console.error(err);
+        } else if (result) {
+            console.log(`${result} files have been deleted`);
+        }
+    });
+};
+
+Template.header.events({
+    'click [name=delete-files]': function (ev) {
+        ev.preventDefault();
+        deleteFiles({});
+    },
+    'click [name=delete-public-files]': function (ev) {
+        ev.preventDefault();
+        deleteFiles({userId: null});
+    },
+    'click [name=delete-private-files]': function (ev) {
+        ev.preventDefault();
+        deleteFiles({userId: {$ne: null}});
+    }
+});
 
 Template.uploadForm.events({
     'click [name=import]': function (ev, tpl) {
@@ -56,7 +84,11 @@ Template.uploadForm.events({
     }
 });
 
-Template.uploadForm.helpers({
+Template.fileTable.onCreated(function () {
+    this.subscribe('files');
+});
+
+Template.fileTable.helpers({
     files: function () {
         return Files.find({}, {
             sort: {createdAt: 1, name: 1}
@@ -64,15 +96,7 @@ Template.uploadForm.helpers({
     }
 });
 
-Template.uploadForm.onRendered(function () {
-    let tpl = this;
-
-    tpl.autorun(function () {
-        tpl.subscribe('files');
-    });
-});
-
-Template.file.events({
+Template.fileTableRow.events({
     'click [name=delete]': function (ev) {
         ev.preventDefault();
         Files.remove(this._id);
@@ -91,7 +115,7 @@ Template.file.events({
     }
 });
 
-Template.file.helpers({
+Template.fileTableRow.helpers({
     canAbort: function () {
         return workers.hasOwnProperty(this._id);
     },
@@ -112,7 +136,7 @@ Template.file.helpers({
         return bytes + ' B';
     },
     progress: function () {
-        return (this.progress * 100).toFixed(2);
+        return Math.round(this.progress * 10000) / 100;
     },
     thumb: function () {
         return Thumbnails.findOne({originalId: this._id});

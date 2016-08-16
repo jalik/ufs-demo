@@ -1,88 +1,15 @@
-/* CSS declarations go here */
-
-body {
-    color: #555;
-    font-size: 90%;
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-a {
-    color: dodgerblue;
-    text-decoration: none;
-    -webkit-transition: all 200ms;
-    -moz-transition: all 200ms;
-    -ms-transition: all 200ms;
-    -o-transition: all 200ms;
-    transition: all 200ms;
-}
-
-a:focus, a:hover {
-    color: deepskyblue;
-    text-decoration: underline;
-}
-
-table {
-    margin: 20px 0;
-    width: 100%;
-}
-
-td {
-    border-bottom: solid 1px #eee;
-    padding: 5px;
-    text-align: left;
-}
-
-th {
-    border-bottom: solid 2px #ddd;
-    padding: 5px;
-    text-align: left;
-}
-
-button {
-    background: #888;
-    border: none;
-    border-radius: 3px;
-    color: #eee;
-    cursor: pointer;
-    padding: 5px;
-}
-
-button:hover {
-    background: #aaa;
-    color: #fff;
-}
-
-#page {
-    margin: 20px;
-}
-
-.thumbnail {
-    width: 48px;
-    height: auto;
-}
-
-.btn-delete {
-    background-color: #c90000;
-    color: #fff;
-}
-
-.btn-upload {
-    background-color: #009900;
-    color: #fff;
-}
-
-#login-bar {
-    background-color: #eee;
-    border-bottom: solid 1px #ddd;
-    padding: 10px 30px;
-    text-align: left;
-}
 
 .bar {
     background: #eee;
     padding: 10px;
+}
+
+.empty {
+    color: #aaa;
+    display: block;
+    font-size: 1.3em;
+    padding: 30px;
+    text-align: center;
 }
 
 .help {
@@ -91,10 +18,27 @@ button:hover {
     line-height: 1.3em;
 }
 
-.private-access {
-    color: #c94501;
+.label-private {
+    background-color: #c94501;
 }
 
-.public-access {
-    color: #009900;
+.label-public {
+    background-color: #009900;
+}
+
+.table td .thumbnail {
+    margin-bottom: 0;
+}
+
+#page {
+    padding-top: 20px;
+}
+
+#login-buttons {
+    height: 100%;
+    line-height: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
