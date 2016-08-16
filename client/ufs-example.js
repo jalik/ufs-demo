@@ -6,16 +6,18 @@ window.workers = {};
 Template.uploadForm.events({
     'click [name=import]': function (ev, tpl) {
         ev.preventDefault();
+        let url = window.prompt("URL to load:");
 
-        let url = tpl.$('[name=url]').val();
-        UploadFS.importFromURL(url, {}, FileStore, function (err, file) {
-            if (err) {
-                console.error(err);
-            } else if (file) {
-                tpl.$('[name=url]').val('');
-                console.log('file successfully imported : ', file);
-            }
-        });
+        if (url) {
+            UploadFS.importFromURL(url, {}, FileStore, function (err, file) {
+                if (err) {
+                    console.error(err);
+                } else if (file) {
+                    tpl.$('[name=url]').val('');
+                    console.log('file successfully imported : ', file);
+                }
+            });
+        }
     },
     'click [name=upload]': function (ev, tpl) {
         ev.preventDefault();
@@ -69,7 +71,6 @@ Template.uploadForm.onRendered(function () {
     let tpl = this;
 
     tpl.autorun(function () {
-        let userId = Meteor.userId();
         tpl.subscribe('files');
     });
 });
@@ -99,7 +100,7 @@ Template.file.helpers({
     },
     canDelete: function () {
         let userId = Meteor.userId();
-        return userId && (userId === this.userId || !this.userId);
+        return userId === this.userId || !this.userId;
     },
     formatSize: function (bytes) {
         if (bytes >= 1000000000) {
