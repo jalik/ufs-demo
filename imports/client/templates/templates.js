@@ -1,6 +1,3 @@
-// Slow down the transfer to simulate slow connection
-UploadFS.config.simulateWriteDelay = 0;
-
 window.workers = {};
 
 Template.uploadForm.events({

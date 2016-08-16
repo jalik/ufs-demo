@@ -1,6 +1,6 @@
 {
   "name": "ufs-example",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Demo package for UploadFS",
   "main": "client/ufs-example.js",
   "dependencies": {
@@ -12,7 +12,12 @@
     "url": "git+https://github.com/jalik/ufs-example.git"
   },
   "keywords": [
-    "ufs"
+    "ufs",
+    "uploadfs",
+    "upload",
+    "uploader",
+    "meteor",
+    "demo"
   ],
   "author": "Karl STEIN",
   "license": "MIT",
