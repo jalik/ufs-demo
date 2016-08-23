@@ -48,28 +48,30 @@ Template.uploadForm.events({
         ev.preventDefault();
 
         UploadFS.selectFiles(function (file) {
-            const ONE_MB = 1024 * 100;
+            const ONE_MB = 1024 * 1000;
             let uploader = new UploadFS.Uploader({
-                adaptive: false,
-                chunkSize: ONE_MB * 16.66,
-                maxChunkSize: ONE_MB * 20,
+                adaptive: true,
+                chunkSize: ONE_MB,
+                maxChunkSize: ONE_MB * 10,
                 data: file,
                 file: file,
                 store: FileStore,
                 maxTries: 3
             });
             uploader.onAbort = function (file) {
-                console.log(file.name + ' upload aborted');
+                console.log(`${file.name} upload aborted`);
             };
             uploader.onComplete = function (file) {
-                console.log(file.name + ' upload completed');
+                let time = (this.getElapsedTime() / 1000).toFixed(2);
+                let avgSpeed = (this.getAverageSpeed() / 1024).toFixed(2);
+                console.log(`${file.name} upload completed in ${time}s @ ${avgSpeed}KB/s`);
             };
             uploader.onCreate = function (file) {
-                console.log(file.name + ' created');
+                console.log(`${file.name} created`);
                 workers[file._id] = this;
             };
             uploader.onError = function (err, file) {
-                console.error(file.name + ' could not be uploaded', err);
+                console.log(`${file.name} could not be uploaded`, err);
             };
             uploader.onProgress = function (file, progress) {
                 console.log(file.name + ' :'

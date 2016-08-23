@@ -37,7 +37,7 @@ huttonr:bootstrap3@3.3.6_13
 huttonr:bootstrap3-assets@3.3.6_3
 id-map@1.0.8
 jalik:i18n@0.1.1
-jalik:ufs@0.6.3
+jalik:ufs@0.6.6
 jalik:ufs-cloudinary@0.1.0
 jalik:ufs-gridfs@0.1.1
 jalik:ufs-local@0.2.5
