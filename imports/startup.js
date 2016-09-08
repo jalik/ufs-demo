@@ -4,10 +4,6 @@ import './common';
 import './collections/files';
 import './collections/thumbnails';
 
-// Load stores
-import './stores/thumbnails';
-import './stores/files';
-
 // Load client logic
 if (Meteor.isClient) {
     require('./client/index');

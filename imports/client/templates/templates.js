@@ -34,7 +34,7 @@ Template.uploadForm.events({
         let url = window.prompt("URL to load:");
 
         if (url) {
-            UploadFS.importFromURL(url, {}, FileStore, function (err, file) {
+            UploadFS.importFromURL(url, {}, 'files', function (err, file) {
                 if (err) {
                     console.error(err);
                 } else if (file) {
@@ -55,7 +55,7 @@ Template.uploadForm.events({
                 maxChunkSize: ONE_MB * 10,
                 data: file,
                 file: file,
-                store: FileStore,
+                store: 'files',
                 maxTries: 3
             });
             uploader.onAbort = function (file) {
