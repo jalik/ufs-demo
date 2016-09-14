@@ -31,26 +31,10 @@ FileFilter = new UploadFS.Filter({
  * File store using local file system
  * @type {UploadFS.store.Local}
  */
-// FileStore = new UploadFS.store.Local({
-//     collection: Files,
-//     name: 'files',
-//     path: '/uploads/files',
-//     filter: FileFilter,
-//     // permissions: defaultPermissions,
-//     onRead: FileReadHandler,
-//     copyTo: [
-//         ThumbnailStore
-//     ]
-// });
-
-/**
- * File store using Mongo GridFS
- * @type {UploadFS.store.GridFS}
- */
-FileStore = new UploadFS.store.GridFS({
+FileStore = new UploadFS.store.Local({
     collection: Files,
     name: 'files',
-    chunkSize: 1024 * 255,
+    path: '/uploads/files',
     filter: FileFilter,
     // permissions: defaultPermissions,
     onRead: FileReadHandler,
@@ -58,3 +42,19 @@ FileStore = new UploadFS.store.GridFS({
         ThumbnailStore
     ]
 });
+
+/**
+ * File store using Mongo GridFS
+ * @type {UploadFS.store.GridFS}
+ */
+// FileStore = new UploadFS.store.GridFS({
+//     collection: Files,
+//     name: 'files',
+//     chunkSize: 1024 * 255,
+//     filter: FileFilter,
+//     // permissions: defaultPermissions,
+//     onRead: FileReadHandler,
+//     copyTo: [
+//         ThumbnailStore
+//     ]
+// });

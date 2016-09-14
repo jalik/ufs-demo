@@ -101,7 +101,13 @@ Template.fileTable.helpers({
 Template.fileTableRow.events({
     'click [name=delete]': function (ev) {
         ev.preventDefault();
-        Files.remove(this._id);
+        Files.remove(this._id, (err, result)=> {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(`delete result: ${result}`);
+            }
+        });
     },
     'click [name=abort]': function (ev) {
         ev.preventDefault();
