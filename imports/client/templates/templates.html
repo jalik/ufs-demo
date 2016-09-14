@@ -134,7 +134,12 @@
                 {{/if}}
             {{/if}}
         </td>
-        <td><a href="{{url}}?token={{token}}" target="_blank">{{name}}</a></td>
+        <td>
+            <!-- Absolute file URL -->
+            <a href="{{url}}?token={{token}}" target="_blank">{{name}}</a>
+            <!-- Relative file URL -->
+            <!--<a href="{{path}}?token={{token}}" target="_blank">{{path}}</a>-->
+        </td>
         <td>{{type}}</td>
         <td>{{extension}}</td>
         <td style="text-align: right; white-space: nowrap">{{formatSize size}}</td>

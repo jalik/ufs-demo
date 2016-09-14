@@ -1,4 +1,4 @@
-import '../collections/files';
+import '/imports/collections/files';
 import {UploadFS} from 'meteor/jalik:ufs';
 
 /**
@@ -31,17 +31,17 @@ FileFilter = new UploadFS.Filter({
  * File store using local file system
  * @type {UploadFS.store.Local}
  */
-FileStore = new UploadFS.store.Local({
-    collection: Files,
-    name: 'files',
-    path: '/uploads/files',
-    filter: FileFilter,
-    // permissions: defaultPermissions,
-    onRead: FileReadHandler,
-    copyTo: [
-        ThumbnailStore
-    ]
-});
+// FileStore = new UploadFS.store.Local({
+//     collection: Files,
+//     name: 'files',
+//     path: '/uploads/files',
+//     filter: FileFilter,
+//     // permissions: defaultPermissions,
+//     onRead: FileReadHandler,
+//     copyTo: [
+//         ThumbnailStore
+//     ]
+// });
 
 /**
  * File store using Mongo GridFS
@@ -49,7 +49,7 @@ FileStore = new UploadFS.store.Local({
  */
 FileStore = new UploadFS.store.GridFS({
     collection: Files,
-    name: 'photos',
+    name: 'files',
     chunkSize: 1024 * 255,
     filter: FileFilter,
     // permissions: defaultPermissions,

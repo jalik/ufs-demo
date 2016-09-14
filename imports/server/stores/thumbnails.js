@@ -1,4 +1,4 @@
-import '../collections/thumbnails';
+import '/imports/collections/thumbnails';
 import {UploadFS} from 'meteor/jalik:ufs';
 
 /**
