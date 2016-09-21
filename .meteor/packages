@@ -30,3 +30,4 @@ jalik:ufs-gridfs
 huttonr:bootstrap3
 jalik:i18n
 shell-server
+audit-argument-checks
