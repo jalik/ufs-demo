@@ -12,7 +12,7 @@ binary-heap@1.0.9
 blaze@2.1.9
 blaze-html-templates@1.0.5
 blaze-tools@1.0.10
-boilerplate-generator@1.0.9
+boilerplate-generator@1.0.10
 caching-compiler@1.1.7
 caching-html-compiler@1.0.7
 callback-hook@1.0.9
@@ -38,16 +38,16 @@ huttonr:bootstrap3@3.3.6_13
 huttonr:bootstrap3-assets@3.3.6_3
 id-map@1.0.8
 jalik:i18n@0.1.1
-jalik:ufs@0.6.9
+jalik:ufs@0.7.0_2
 jalik:ufs-gridfs@0.1.2
-jalik:ufs-local@0.2.6
+jalik:ufs-local@0.2.7
 jquery@1.11.9
 launch-screen@1.0.12
 less@2.7.5
 livedata@1.0.18
 localstorage@1.0.11
 logging@1.1.15
-matb33:collection-hooks@0.7.15
+matb33:collection-hooks@0.8.4
 meteor@1.2.17
 meteor-base@1.0.4
 minifier-css@1.2.14
@@ -60,7 +60,7 @@ modules-runtime@0.7.6
 mongo@1.1.12
 mongo-id@1.0.5
 npm-bcrypt@0.9.1
-npm-mongo@1.5.49
+npm-mongo@1.5.50
 observe-sequence@1.0.12
 ordered-dict@1.0.8
 promise@0.8.7
@@ -78,7 +78,7 @@ shell-server@0.2.1
 spacebars@1.0.13
 spacebars-compiler@1.0.13
 srp@1.0.9
-standard-minifier-css@1.2.0
+standard-minifier-css@1.2.1
 standard-minifier-js@1.2.0
 templating@1.2.15
 templating-compiler@1.2.15
