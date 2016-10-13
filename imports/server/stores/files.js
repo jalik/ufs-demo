@@ -2,22 +2,6 @@ import '/imports/collections/files';
 import {UploadFS} from 'meteor/jalik:ufs';
 
 /**
- * Store permissions
- * @type {UploadFS.StorePermissions}
- */
-// const defaultPermissions = new UploadFS.StorePermissions({
-//     insert: function (userId, file) {
-//     },
-//     remove: function (userId, file) {
-//         if (userId !== file.userId && file.userId) {
-//             throw new Meteor.Error('forbidden', "You must be logged in to delete a file");
-//         }
-//     },
-//     update: function (userId, file) {
-//     },
-// });
-
-/**
  * File filter
  * @type {UploadFS.Filter}
  */
@@ -36,11 +20,38 @@ FileStore = new UploadFS.store.Local({
     name: 'files',
     path: '/uploads/files',
     filter: FileFilter,
-    // permissions: defaultPermissions,
+    // Overwrite default permissions
+    // permissions: new UploadFS.StorePermissions({
+    //     insert: function (userId, file) {
+    //         return false;
+    //     },
+    //     remove: function (userId, file) {
+    //         return !file.userId || userId === file.userId;
+    //     },
+    //     update: function (userId, file) {
+    //         return !file.userId || userId === file.userId;
+    //     },
+    // }),
     onRead: FileReadHandler,
     copyTo: [
         ThumbnailStore
-    ]
+    ],
+    transformWrite: function (from, to, fileId, file) {
+        if (file.type && file.type.startsWith('image/')) {
+            const gm = Npm.require('gm');
+
+            if (gm) {
+                gm(from)
+                    .quality(90)
+                    .autoOrient()
+                    .stream().pipe(to);
+            } else {
+                console.error("gm is not installed");
+            }
+        } else {
+            from.pipe(to);
+        }
+    }
 });
 
 /**
