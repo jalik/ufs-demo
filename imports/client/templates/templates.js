@@ -1,9 +1,13 @@
 import {Meteor} from 'meteor/meteor';
+import {Template} from 'meteor/templating';
 import {UploadFS} from 'meteor/jalik:ufs';
+import {Files} from '/imports/api/files/collections/files';
+import {Thumbnails} from '/imports/api/files/collections/thumbnails';
+
 
 window.workers = {};
 
-let deleteFiles = function (filter) {
+const deleteFiles = function (filter) {
     Meteor.call('deleteFiles', filter, function (err, result) {
         if (err) {
             console.error(err);
@@ -14,22 +18,22 @@ let deleteFiles = function (filter) {
 };
 
 Template.header.events({
-    'click [name=delete-files]': function (ev) {
+    'click [name=delete-files]'(ev) {
         ev.preventDefault();
         deleteFiles({});
     },
-    'click [name=delete-public-files]': function (ev) {
+    'click [name=delete-public-files]'(ev) {
         ev.preventDefault();
         deleteFiles({userId: null});
     },
-    'click [name=delete-private-files]': function (ev) {
+    'click [name=delete-private-files]'(ev) {
         ev.preventDefault();
         deleteFiles({userId: {$ne: null}});
     }
 });
 
 Template.uploadForm.events({
-    'click [name=import]': function (ev, tpl) {
+    'click [name=import]'(ev, tpl) {
         ev.preventDefault();
         let url = window.prompt("URL to load:");
 
@@ -44,37 +48,44 @@ Template.uploadForm.events({
             });
         }
     },
-    'click [name=upload]': function (ev, tpl) {
+    'click [name=upload]'(ev, tpl) {
         ev.preventDefault();
 
+        // Open selection dialog for multiple files
         UploadFS.selectFiles(function (file) {
             const ONE_MB = 1024 * 1000;
-            let uploader = new UploadFS.Uploader({
-                adaptive: true,
-                chunkSize: ONE_MB,
+
+            // Prepare uploader for each file to upload
+            const uploader = new UploadFS.Uploader({
+                adaptive: true,// use adaptive transfer speed
+                chunkSize: ONE_MB,// default chunk size
                 maxChunkSize: ONE_MB * 10,
                 data: file,
                 file: file,
-                store: 'files',
+                store: 'files',// where the file will be stored
                 maxTries: 3
             });
             uploader.onAbort = function (file) {
-                console.log(`${file.name} upload aborted`);
+                console.info(`${file.name} upload aborted`);
             };
             uploader.onComplete = function (file) {
                 let time = (this.getElapsedTime() / 1000).toFixed(2);
                 let avgSpeed = (this.getAverageSpeed() / 1024).toFixed(2);
-                console.log(`${file.name} upload completed in ${time}s @ ${avgSpeed}KB/s`);
+                console.info(`${file.name} upload completed in ${time}s @ ${avgSpeed}KB/s`);
             };
             uploader.onCreate = function (file) {
-                console.log(`${file.name} created`);
+                console.info(`${file.name} created`);
                 workers[file._id] = this;
             };
             uploader.onError = function (err, file) {
-                console.log(`${file.name} could not be uploaded`, err);
+                let message = `${file.name} could not be uploaded : ${err.message}`;
+                console.error(message);
+                console.error('ERROR:', err);
+                console.error(err.stack);
+                window.alert(message)
             };
             uploader.onProgress = function (file, progress) {
-                console.log(file.name + ' :'
+                console.info(file.name + ' :'
                     + "\n" + (progress * 100).toFixed(2) + '%'
                     + "\n" + (this.getSpeed() / 1024).toFixed(2) + 'KB/s'
                     + "\n" + 'elapsed: ' + (this.getElapsedTime() / 1000).toFixed(2) + 's'
@@ -91,7 +102,7 @@ Template.fileTable.onCreated(function () {
 });
 
 Template.fileTable.helpers({
-    files: function () {
+    files() {
         return Files.find({}, {
             sort: {createdAt: 1, name: 1}
         });
@@ -99,9 +110,9 @@ Template.fileTable.helpers({
 });
 
 Template.fileTableRow.events({
-    'click [name=delete]': function (ev) {
+    'click [name=delete]'(ev) {
         ev.preventDefault();
-        Files.remove(this._id, (err, result)=> {
+        Files.remove(this._id, (err, result) => {
             if (err) {
                 console.error(err);
             } else {
@@ -109,29 +120,29 @@ Template.fileTableRow.events({
             }
         });
     },
-    'click [name=abort]': function (ev) {
+    'click [name=abort]'(ev) {
         ev.preventDefault();
         workers[this._id].abort();
     },
-    'click [name=stop]': function (ev) {
+    'click [name=stop]'(ev) {
         ev.preventDefault();
         workers[this._id].stop();
     },
-    'click [name=start]': function (ev) {
+    'click [name=start]'(ev) {
         ev.preventDefault();
         workers[this._id].start();
     }
 });
 
 Template.fileTableRow.helpers({
-    canAbort: function () {
+    canAbort() {
         return workers.hasOwnProperty(this._id);
     },
-    canDelete: function () {
+    canDelete() {
         let userId = Meteor.userId();
         return userId === this.userId || !this.userId;
     },
-    formatSize: function (bytes) {
+    formatSize(bytes) {
         if (bytes >= 1000000000) {
             return (bytes / 1000000000).toFixed(2) + ' GB';
         }
@@ -143,10 +154,10 @@ Template.fileTableRow.helpers({
         }
         return bytes + ' B';
     },
-    progress: function () {
+    progress() {
         return Math.round(this.progress * 10000) / 100;
     },
-    thumb: function () {
+    thumb() {
         return Thumbnails.findOne({originalId: this._id});
     }
 });

@@ -1,8 +1,7 @@
-import './common';
+import {Meteor} from 'meteor/meteor';
 
-// Load collections
-import './collections/files';
-import './collections/thumbnails';
+// Load files API
+import '/imports/api/files/index';
 
 // Load client logic
 if (Meteor.isClient) {

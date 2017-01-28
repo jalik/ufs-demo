@@ -1,9 +1,9 @@
 import {Meteor} from 'meteor/meteor';
+import {Files} from '../collections/files';
+
 
 Meteor.methods({
-
-    deleteFiles: function (filter) {
+    deleteFiles(filter) {
         return Files.remove(filter);
     }
-
 });

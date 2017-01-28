@@ -1,11 +1,14 @@
-import '/imports/collections/thumbnails';
+import gm from 'gm';
 import {UploadFS} from 'meteor/jalik:ufs';
+import {FileReadHandler} from '../lib';
+import {Thumbnails} from '../collections/thumbnails';
+
 
 /**
  * Thumbnail filter
  * @type {UploadFS.Filter}
  */
-ThumbnailFilter = new UploadFS.Filter({
+export const ThumbnailFilter = new UploadFS.Filter({
     contentTypes: ['image/*']
 });
 
@@ -13,14 +16,13 @@ ThumbnailFilter = new UploadFS.Filter({
  * The thumbnails store
  * @type {UploadFS.store.Local}
  */
-ThumbnailStore = new UploadFS.store.Local({
+export const ThumbnailStore = new UploadFS.store.Local({
     collection: Thumbnails,
     name: 'thumbnails',
-    path: '/uploads/thumbnails',
+    path: './uploads/thumbnails',
     filter: ThumbnailFilter,
-    // permissions: defaultPermissions,
     onRead: FileReadHandler,
-    transformWrite: function (from, to, fileId, file) {
+    transformWrite(from, to, fileId, file) {
         if (file.type && file.type.startsWith('image/')) {
             const gm = Npm.require('gm');
 

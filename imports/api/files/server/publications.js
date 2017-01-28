@@ -1,3 +1,9 @@
+import _ from 'underscore';
+import {Meteor} from 'meteor/meteor';
+import {Files} from '../collections/files';
+import {Thumbnails} from '../collections/thumbnails';
+
+
 // Publish files and thumbnails
 Meteor.publish('files', function (fields, options) {
     fields = _.extend({}, fields, {});
