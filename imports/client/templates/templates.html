@@ -1,5 +1,5 @@
 <head>
-    <title>{{t "UploadFS Demo"}}</title>
+    <title lang="en">{{t "UploadFS Demo"}}</title>
 </head>
 <body>
 {{> layout}}
@@ -118,19 +118,21 @@
     <tr>
         <td>
             {{#if uploading}}
-                <img class="thumbnail" width="32" height="32" src="/spinner.gif">
+                {{> spinner}}
             {{else}}
-                {{#if isAudio}}
-                    <audio src="{{url}}?token={{token}}" controls></audio>
-                {{/if}}
-                {{#if isImage}}
-                    <img class="thumbnail" width="32" height="32" src="{{thumb.url}}?token={{thumb.token}}">
-                {{/if}}
-                {{#if isText}}
-                    <img class="thumbnail" width="32" height="32" src="/file.png">
-                {{/if}}
-                {{#if isVideo}}
-                    <video class="thumbnail" width="32" height="32" src="{{url}}?token={{token}}" controls></video>
+                {{#if complete}}
+                    {{#if isAudio}}
+                        <audio src="{{path}}?token={{token}}" controls></audio>
+                    {{/if}}
+                    {{#if isImage}}
+                        <img class="thumbnail" width="32" height="32" src="{{thumb.path}}?token={{thumb.token}}">
+                    {{/if}}
+                    {{#if isText}}
+                        <img class="thumbnail" width="32" height="32" src="{{absoluteUrl 'file.png'}}">
+                    {{/if}}
+                    {{#if isVideo}}
+                        <video class="thumbnail" width="32" height="32" src="{{path}}?token={{token}}" controls></video>
+                    {{/if}}
                 {{/if}}
             {{/if}}
         </td>
@@ -181,4 +183,8 @@
             </div>
         </td>
     </tr>
+</template>
+
+<template name="spinner">
+    <img width="32" height="32" src="{{absoluteUrl 'spinner.svg'}}">
 </template>

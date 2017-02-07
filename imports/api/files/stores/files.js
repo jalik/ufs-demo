@@ -37,7 +37,12 @@ import {ThumbnailStore} from '../stores/thumbnails';
 export const FileFilter = new UploadFS.Filter({
     contentTypes: ['image/*', 'audio/*', 'video/*', 'application/*'],
     maxSize: 1024 * 1000 * 10, // 10MB,
-    minSize: 1
+    minSize: 1,
+    onCheck(file) {
+        // Custom checks
+        console.log(`checking file "${file.name}"...`);
+        return true;
+    }
 });
 
 /**
@@ -49,6 +54,11 @@ export const FileStore = new UploadFS.store.Local({
     name: 'files',
     path: './uploads/files',
     filter: FileFilter,
+    onValidate(file) {
+        // Custom validation before writing file to the store
+        console.log(`validating file "${file.name}"...`);
+        // throw new Meteor.Error('invalid-file-x');
+    },
     // Overwrite default permissions
     permissions: new UploadFS.StorePermissions({
         insert(userId, file) {

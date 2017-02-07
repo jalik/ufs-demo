@@ -24,6 +24,7 @@
  */
 
 import {i18n} from 'meteor/jalik:i18n';
+import {Template} from 'meteor/templating';
 import {UploadFS} from 'meteor/jalik:ufs';
 
 
@@ -41,3 +42,7 @@ UploadFS.config.simulateWriteDelay = 0;
 
 // Add translation template helpers
 i18n.addBlazeHelpers();
+
+Template.registerHelper('absoluteUrl', function (path) {
+    return Meteor.absoluteUrl(path);
+});
