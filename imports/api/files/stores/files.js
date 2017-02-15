@@ -22,12 +22,11 @@
  * SOFTWARE.
  *
  */
-
-import gm from 'gm';
-import {UploadFS} from 'meteor/jalik:ufs';
-import {Files} from '../collections/files';
-import {FileReadHandler} from '../lib';
-import {ThumbnailStore} from '../stores/thumbnails';
+import gm from "gm";
+import {Files} from "../collections/files";
+import {FileReadHandler} from "../lib";
+import {ThumbnailStore} from "../stores/thumbnails";
+import {UploadFS} from "meteor/jalik:ufs";
 
 
 /**
@@ -40,7 +39,7 @@ export const FileFilter = new UploadFS.Filter({
     minSize: 1,
     onCheck(file) {
         // Custom checks
-        console.log(`checking file "${file.name}"...`);
+        console.log(`Filter.onCheck`, file);
         return true;
     }
 });
@@ -54,11 +53,6 @@ export const FileStore = new UploadFS.store.Local({
     name: 'files',
     path: './uploads/files',
     filter: FileFilter,
-    onValidate(file) {
-        // Custom validation before writing file to the store
-        console.log(`validating file "${file.name}"...`);
-        // throw new Meteor.Error('invalid-file-x');
-    },
     // Overwrite default permissions
     permissions: new UploadFS.StorePermissions({
         insert(userId, file) {
@@ -74,10 +68,33 @@ export const FileStore = new UploadFS.store.Local({
             return !file.userId || userId === file.userId;
         },
     }),
-    onRead: FileReadHandler,
     copyTo: [
         ThumbnailStore
     ],
+    onCopyError(err, fileId, file) {
+        console.log(`Store.onCopyError`, file);
+        console.error(err);
+    },
+    onFinishUpload(file) {
+        console.log(`Store.onFinishUpload`, file);
+    },
+    onRead(fileId, file, request, response) {
+        console.log(`Store.onRead`, file);
+        FileReadHandler(fileId, file, request, request);
+    },
+    onReadError(err, fileId, file) {
+        console.log(`Store.onReadError`, file);
+        console.error(err);
+    },
+    onWriteError(err, fileId, file) {
+        console.log(`Store.onWriteError`, file);
+        console.error(err);
+    },
+    onValidate(file) {
+        console.log(`Store.onValidate`, file);
+        // if something is wrong, throw an error
+        // throw new Meteor.Error('invalid-file-for-x-reason');
+    },
     transformWrite(from, to, fileId, file) {
         // Modifies images only
         if (file.type && file.type.startsWith('image/')) {
