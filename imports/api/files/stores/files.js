@@ -46,9 +46,9 @@ export const FileFilter = new UploadFS.Filter({
 
 /**
  * File store using local file system
- * @type {UploadFS.store.Local}
+ * @type {UploadFS.store.GridFS}
  */
-export const FileStore = new UploadFS.store.Local({
+export const FileStore = new UploadFS.store.GridFS({
     collection: Files,
     name: 'files',
     path: './uploads/files',
