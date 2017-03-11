@@ -23,11 +23,12 @@
  *
  */
 
-import gm from 'gm';
-import {UploadFS} from 'meteor/jalik:ufs';
-import {FileReadHandler} from '../lib';
-import {Thumbnails} from '../collections/thumbnails';
-
+import gm from "gm";
+import {FileReadHandler} from "../lib";
+import {GridFSStore} from "meteor/jalik:ufs-gridfs";
+import {LocalStore} from "meteor/jalik:ufs-local";
+import {Thumbnails} from "../collections/thumbnails";
+import {UploadFS} from "meteor/jalik:ufs";
 
 /**
  * Thumbnail filter
