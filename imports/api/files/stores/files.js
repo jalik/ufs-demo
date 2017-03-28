@@ -99,8 +99,6 @@ export const FileStore = new GridFSStore({
     transformWrite(from, to, fileId, file) {
         // Modifies images only
         if (file.type && file.type.startsWith('image/')) {
-            const gm = Npm.require('gm');
-
             if (gm) {
                 gm(from)
                     .quality(90)
@@ -114,18 +112,3 @@ export const FileStore = new GridFSStore({
         }
     }
 });
-
-/**
- * File store using Mongo GridFS
- * @type {UploadFS.store.GridFS}
- */
-// FileStore = new UploadFS.store.GridFS({
-//     collection: Files,
-//     name: 'files',
-//     chunkSize: 1024 * 255,
-//     filter: FileFilter,
-//     onRead: FileReadHandler,
-//     copyTo: [
-//         ThumbnailStore
-//     ]
-// });

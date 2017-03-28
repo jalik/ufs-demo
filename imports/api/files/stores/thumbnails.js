@@ -42,7 +42,7 @@ export const ThumbnailFilter = new UploadFS.Filter({
  * The thumbnails store
  * @type {UploadFS.store.Local}
  */
-export const ThumbnailStore = new UploadFS.store.Local({
+export const ThumbnailStore = new GridFSStore({
     collection: Thumbnails,
     name: 'thumbnails',
     path: './uploads/thumbnails',
@@ -51,8 +51,6 @@ export const ThumbnailStore = new UploadFS.store.Local({
     permissions: new UploadFS.StorePermissions({}),
     transformWrite(from, to, fileId, file) {
         if (file.type && file.type.startsWith('image/')) {
-            const gm = Npm.require('gm');
-
             if (gm) {
                 // Resize image
                 gm(from)
@@ -67,6 +65,7 @@ export const ThumbnailStore = new UploadFS.store.Local({
             }
         } else {
             // do nothing
+            from.pipe(to);
         }
     }
 });
