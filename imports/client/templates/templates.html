@@ -122,7 +122,7 @@
             {{else}}
                 {{#if complete}}
                     {{#if isAudio}}
-                        <audio src="{{path}}?token={{token}}" controls></audio>
+                        <audio src="{{path}}?token={{token}}" type="{{type}}" controls></audio>
                     {{/if}}
                     {{#if isImage}}
                         <img class="thumbnail" width="32" height="32" src="{{thumb.path}}?token={{thumb.token}}">
