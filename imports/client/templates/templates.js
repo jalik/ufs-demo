@@ -80,14 +80,22 @@ Template.uploadForm.events({
         UploadFS.selectFiles(function (file) {
             const ONE_MB = 1024 * 1000;
 
+            // Prepare file meta data
+            const meta = {
+                name: file.name,
+                type: file.type,
+                size: file.size,
+                customField: Date.now()
+            };
+
             // Prepare uploader for each file to upload
             const uploader = new UploadFS.Uploader({
-                adaptive: true,// use adaptive transfer speed
-                chunkSize: ONE_MB,// default chunk size
-                maxChunkSize: ONE_MB * 10,
-                data: file,
-                file: file,
-                store: 'files',// where the file will be stored
+                adaptive: true,             // use adaptive transfer speed
+                chunkSize: ONE_MB,          // default chunk size
+                maxChunkSize: ONE_MB * 10,  // max chunk size when uploading (used only with adaptive transfer)
+                data: file,                 // file blob data
+                file: meta,                 // file meta data
+                store: 'files',             // where the file will be stored
                 maxTries: 3
             });
             uploader.onAbort = function (file) {

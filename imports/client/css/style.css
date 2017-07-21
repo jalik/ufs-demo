@@ -23,18 +23,9 @@
  *
  */
 
-
 .bar {
     background: #eee;
     padding: 10px;
-}
-
-.empty {
-    color: #aaa;
-    display: block;
-    font-size: 1.3em;
-    padding: 30px;
-    text-align: center;
 }
 
 .help {
@@ -53,6 +44,20 @@
 
 .table td .thumbnail {
     margin-bottom: 0;
+}
+
+table tr td.empty {
+    color: #aaa;
+    font-size: 1.3em;
+    padding: 30px;
+    text-align: center;
+}
+
+table tr td.loading {
+    color: #aaa;
+    font-size: 1.3em;
+    padding: 30px;
+    text-align: center;
 }
 
 #page {

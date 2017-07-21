@@ -22,20 +22,17 @@
  * SOFTWARE.
  *
  */
-
-import {i18n} from 'meteor/jalik:i18n';
-import {Template} from 'meteor/templating';
-import {UploadFS} from 'meteor/jalik:ufs';
-
-
+import {Files} from "/imports/api/files/collections/files";
+import {Thumbnails} from "/imports/api/files/collections/thumbnails";
+import {i18n} from "meteor/jalik:i18n";
+import {Template} from "meteor/templating";
+import {UploadFS} from "meteor/jalik:ufs";
 // Load styles
-import './css/style.css';
-
+import "./css/style.css";
 // Load templates
-import './templates/templates.html';
-
+import "./templates/templates.html";
 // Load templates logic
-import './templates/templates.js';
+import "./templates/templates.js";
 
 // Slow down the transfer to simulate slow connection
 UploadFS.config.simulateWriteDelay = 0;
@@ -43,6 +40,12 @@ UploadFS.config.simulateWriteDelay = 0;
 // Add translation template helpers
 i18n.addBlazeHelpers();
 
-Template.registerHelper('absoluteUrl', function (path) {
+Template.registerHelper("absoluteUrl", function (path) {
     return Meteor.absoluteUrl(path);
 });
+
+// Expose collections
+window.db = {
+    files: Files,
+    thumbs: Thumbnails
+};

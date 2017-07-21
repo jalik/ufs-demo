@@ -1,5 +1,5 @@
 {
-  "name": "ufs-example",
+  "name": "ufs-demo",
   "version": "0.2.5",
   "description": "Demo package for UploadFS",
   "dependencies": {

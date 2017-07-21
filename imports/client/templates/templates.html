@@ -101,15 +101,22 @@
         </tr>
         </thead>
         <tbody>
-        {{#each files}}
-            {{> fileTableRow}}
+        {{#if Template.subscriptionsReady}}
+            {{#each files}}
+                {{> fileTableRow}}
+            {{else}}
+                <tr>
+                    <td colspan="8" class="empty">{{t "No file"}}</td>
+                </tr>
+            {{/each}}
         {{else}}
             <tr>
-                <td colspan="8">
-                    <span class="empty">{{t "No file"}}</span>
+                <td colspan="8" class="loading">
+                    <img src="images/spinner.svg" width="48" height="48">
+                    <p>{{t "Loading..."}}</p>
                 </td>
             </tr>
-        {{/each}}
+        {{/if}}
         </tbody>
     </table>
 </template>

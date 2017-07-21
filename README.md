@@ -1,4 +1,4 @@
-# UFS Example
+# UFS Demo
 
 This is a simple Meteor app using the [UploadFS](https://github.com/jalik/jalik-ufs) package.
 
