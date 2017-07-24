@@ -60,10 +60,14 @@ Template.header.events({
 Template.uploadForm.events({
     'click [name=import]'(ev, tpl) {
         ev.preventDefault();
-        let url = window.prompt("URL to load:");
+
+        const url = window.prompt("URL to load:");
+        const file = {
+            customField: Date.now()
+        };
 
         if (url) {
-            UploadFS.importFromURL(url, {}, 'files', function (err, file) {
+            UploadFS.importFromURL(url, file, 'files', function (err, file) {
                 if (err) {
                     console.error(err);
                 } else if (file) {
