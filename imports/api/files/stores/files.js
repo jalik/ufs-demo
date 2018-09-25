@@ -25,7 +25,6 @@
 import gm from "gm";
 import {Files} from "../collections/files";
 import {FileReadHandler} from "../lib";
-import {GridFSStore} from "meteor/jalik:ufs-gridfs";
 import {LocalStore} from "meteor/jalik:ufs-local";
 import {ThumbnailStore} from "../stores/thumbnails";
 import {UploadFS} from "meteor/jalik:ufs";
@@ -49,7 +48,7 @@ export const FileFilter = new UploadFS.Filter({
  * File store using local file system
  * @type {UploadFS.store.GridFS}
  */
-export const FileStore = new GridFSStore({
+export const FileStore = new LocalStore({
     collection: Files,
     name: 'files',
     path: './uploads/files',
