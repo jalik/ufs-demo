@@ -24,51 +24,51 @@
  */
 
 .bar {
-    background: #eee;
-    padding: 10px;
+  background: #EEEEEE;
+  padding: 10px;
 }
 
 .help {
-    color: #888;
-    padding: 10px;
-    line-height: 1.3em;
+  color: #888888;
+  padding: 10px;
+  line-height: 1.3em;
 }
 
 .label-private {
-    background-color: #c94501;
+  background-color: #C94501;
 }
 
 .label-public {
-    background-color: #009900;
+  background-color: #009900;
 }
 
 .table td .thumbnail {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 table tr td.empty {
-    color: #aaa;
-    font-size: 1.3em;
-    padding: 30px;
-    text-align: center;
+  color: #AAAAAA;
+  font-size: 1.3em;
+  padding: 30px;
+  text-align: center;
 }
 
 table tr td.loading {
-    color: #aaa;
-    font-size: 1.3em;
-    padding: 30px;
-    text-align: center;
+  color: #AAAAAA;
+  font-size: 1.3em;
+  padding: 30px;
+  text-align: center;
 }
 
 #page {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 
 #login-buttons {
-    height: 100%;
-    line-height: 20px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
+  height: 100%;
+  line-height: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }

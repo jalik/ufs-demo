@@ -23,16 +23,14 @@
  *
  */
 
-import {Meteor} from 'meteor/meteor';
-
-// Load files API
 import '/imports/api/files/index';
+import { Meteor } from 'meteor/meteor';
 
-// Load client logic
 if (Meteor.isClient) {
-    require('./client/index');
+  // Load client logic
+  require('./client/index');
 }
-// Load server logic
 else if (Meteor.isServer) {
-    require('./server/index');
+  // Load server logic
+  require('./server/index');
 }

@@ -1,197 +1,298 @@
 <head>
-    <title lang="en">{{t "UploadFS Demo"}}</title>
+  <title lang="en">{{t "UploadFS Demo"}}</title>
 </head>
 <body>
-{{> layout}}
+  {{> layout}}
 </body>
 
 <template name="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">{{t "UploadFS Demo"}}</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <div class="navbar-form navbar-left">
-                    {{> uploadForm}}
-                </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>{{> loginButtons}}</li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span class="glyphicon glyphicon-cog"></span>
-                            <span>{{t "Actions"}}</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" name="delete-public-files">{{t "Delete public files"}}</a></li>
-                            <li><a href="#" name="delete-private-files">{{t "Delete private files"}}</a></li>
-                            <li><a href="#" name="delete-files">{{t "Delete files"}}</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span class="glyphicon glyphicon-book"></span>
-                            <span>{{t "Documentation"}}</span>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-header">{{t "Core"}}</li>
-                            <li><a href="https://github.com/jalik/jalik-ufs">UploadFS</a></li>
-                            <li class="dropdown-header">{{t "Stores"}}</li>
-                            <li><a href="https://github.com/jalik/jalik-ufs-local">Local</a></li>
-                            <li><a href="https://github.com/jalik/jalik-ufs-gridfs">GridFS</a></li>
-                            <li><a href="https://github.com/sebakerckhof/ufs-wabs">Windows Azure Blob Storage</a></li>
-                            <li><a href="https://github.com/sebakerckhof/ufs-s3">Amazon S3</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button
+          type="button"
+          class="navbar-toggle collapsed"
+          data-toggle="collapse"
+          data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false"
+        >
+          <span class="sr-only"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a
+          class="navbar-brand"
+          href="#"
+        >{{t "UploadFS Demo"}}</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div
+        class="collapse navbar-collapse"
+        id="bs-example-navbar-collapse-1"
+      >
+        <div class="navbar-form navbar-left">
+          {{> uploadForm}}
         </div>
-    </nav>
+        <ul class="nav navbar-nav navbar-right">
+          <li>{{> loginButtons}}</li>
+          <li class="dropdown">
+            <a
+              href="#"
+              class="dropdown-toggle"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="true"
+            >
+              <span class="glyphicon glyphicon-cog"></span>
+              <span>{{t "Actions"}}</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a
+                href="#"
+                name="delete-public-files"
+              >{{t "Delete public files"}}</a></li>
+              <li><a
+                href="#"
+                name="delete-private-files"
+              >{{t "Delete private files"}}</a></li>
+              <li><a
+                href="#"
+                name="delete-files"
+              >{{t "Delete files"}}</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a
+              href="#"
+              class="dropdown-toggle"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="true"
+            >
+              <span class="glyphicon glyphicon-book"></span>
+              <span>{{t "Documentation"}}</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">{{t "Core"}}</li>
+              <li><a href="https://github.com/jalik/jalik-ufs">UploadFS</a></li>
+              <li class="dropdown-header">{{t "Stores"}}</li>
+              <li><a href="https://github.com/jalik/jalik-ufs-local">Local</a></li>
+              <li><a href="https://github.com/jalik/jalik-ufs-gridfs">GridFS</a></li>
+              <li><a href="https://github.com/sebakerckhof/ufs-wabs">Windows Azure Blob Storage</a>
+              </li>
+              <li><a href="https://github.com/sebakerckhof/ufs-s3">Amazon S3</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <template name="layout">
-    {{> header}}
-    <div id="page" class="container-fluid">
-        <section class="row">
-            <div class="col-xs-12">
-                {{> fileTable}}
-            </div>
-        </section>
-    </div>
+  {{> header}}
+  <div
+    id="page"
+    class="container-fluid"
+  >
+    <section class="row">
+      <div class="col-xs-12">
+        {{> fileTable}}
+      </div>
+    </section>
+  </div>
 </template>
 
 <template name="uploadForm">
-    <form>
-        <button class="btn btn-default" name="upload" type="button">
-            <span class="glyphicon glyphicon-upload"></span>
-            <span>{{t "Upload"}}</span>
-        </button>
-        <button class="btn btn-default" name="import" type="button">
-            <span class="glyphicon glyphicon-globe"></span>
-            <span>{{t "Import from URL"}}</span>
-        </button>
-    </form>
+  <form>
+    <button
+      class="btn btn-default"
+      name="upload"
+      type="button"
+    >
+      <span class="glyphicon glyphicon-upload"></span>
+      <span>{{t "Upload"}}</span>
+    </button>
+    <button
+      class="btn btn-default"
+      name="import"
+      type="button"
+    >
+      <span class="glyphicon glyphicon-globe"></span>
+      <span>{{t "Import from URL"}}</span>
+    </button>
+  </form>
 </template>
 
 <template name="fileTable">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>{{t "Preview"}}</th>
-            <th width="20%">{{t "Name"}}</th>
-            <th width="10%">{{t "Type"}}</th>
-            <th width="10%">{{t "Extension"}}</th>
-            <th width="10%" style="text-align: right">{{t "Size"}}</th>
-            <th width="10%" style="text-align: right">{{t "Progress"}}</th>
-            <th width="10%" style="text-align: right">{{t "Access"}}</th>
-            <th style="text-align: right">{{t "Actions"}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#if Template.subscriptionsReady}}
-            {{#each files}}
-                {{> fileTableRow}}
-            {{else}}
-                <tr>
-                    <td colspan="8" class="empty">{{t "No file"}}</td>
-                </tr>
-            {{/each}}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>{{t "Preview"}}</th>
+        <th width="20%">{{t "Name"}}</th>
+        <th width="10%">{{t "Type"}}</th>
+        <th width="10%">{{t "Extension"}}</th>
+        <th
+          width="10%"
+          style="text-align: right"
+        >{{t "Size"}}</th>
+        <th
+          width="10%"
+          style="text-align: right"
+        >{{t "Progress"}}</th>
+        <th
+          width="10%"
+          style="text-align: right"
+        >{{t "Access"}}</th>
+        <th style="text-align: right">{{t "Actions"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if Template.subscriptionsReady}}
+        {{#each files}}
+          {{> fileTableRow}}
         {{else}}
-            <tr>
-                <td colspan="8" class="loading">
-                    <img src="images/spinner.svg" width="48" height="48">
-                    <p>{{t "Loading..."}}</p>
-                </td>
-            </tr>
-        {{/if}}
-        </tbody>
-    </table>
+          <tr>
+            <td
+              colspan="8"
+              class="empty"
+            >{{t "No file"}}</td>
+          </tr>
+        {{/each}}
+      {{else}}
+        <tr>
+          <td
+            colspan="8"
+            class="loading"
+          >
+            <img
+              src="images/spinner.svg"
+              width="48"
+              height="48"
+            >
+            <p>{{t "Loading..."}}</p>
+          </td>
+        </tr>
+      {{/if}}
+    </tbody>
+  </table>
 </template>
 
 <template name="fileTableRow">
-    <tr>
-        <td>
+  <tr>
+    <td>
+      {{#if uploading}}
+        {{> spinner}}
+      {{else}}
+        {{#if complete}}
+          {{#if isAudio}}
+            <audio src="{{path}}?token={{token}}" type="{{type}}" controls></audio>
+          {{/if}}
+          {{#if isImage}}
+            <img class="thumbnail"
+                 width="32"
+                 height="32"
+                 src="{{thumb.path}}?token={{thumb.token}}">
+          {{/if}}
+          {{#if isText}}
+            <img
+              class="thumbnail"
+              width="32"
+              height="32"
+              src="{{absoluteUrl 'file.png'}}"
+            >
+          {{/if}}
+          {{#if isVideo}}
+            <video class="thumbnail"
+                   width="32"
+                   height="32"
+                   src="{{path}}?token={{token}}" controls></video>
+          {{/if}}
+        {{/if}}
+      {{/if}}
+    </td>
+    <td>
+      <!-- Absolute file URL -->
+      <a href="{{url}}?token={{token}}" target="_blank">{{name}}</a>
+      <!-- Relative file URL -->
+      <!--<a href="{{path}}?token={{token}}" target="_blank">{{path}}</a>-->
+    </td>
+    <td>{{type}}</td>
+    <td>{{extension}}</td>
+    <td style="text-align: right; white-space: nowrap">{{formatSize size}}</td>
+    <td style="text-align: right">{{progress}}%</td>
+    <td style="text-align: right">
+      {{#if userId}}
+        <span class="label label-private">{{t "Private"}}</span>
+      {{else}}
+        <span class="label label-public">{{t "Public"}}</span>
+      {{/if}}
+    </td>
+    <td style="text-align: right">
+      <div
+        class="btn-group"
+        role="group"
+      >
+        {{#if canAbort}}
+          {{#unless complete}}
             {{#if uploading}}
-                {{> spinner}}
+              <button
+                class="btn btn-default"
+                name="stop"
+                type="button"
+                title="{{t "Stop"}}"
+              >
+                <span class="glyphicon glyphicon-pause"></span>
+                <span></span>
+              </button>
             {{else}}
-                {{#if complete}}
-                    {{#if isAudio}}
-                        <audio src="{{path}}?token={{token}}" type="{{type}}" controls></audio>
-                    {{/if}}
-                    {{#if isImage}}
-                        <img class="thumbnail" width="32" height="32" src="{{thumb.path}}?token={{thumb.token}}">
-                    {{/if}}
-                    {{#if isText}}
-                        <img class="thumbnail" width="32" height="32" src="{{absoluteUrl 'file.png'}}">
-                    {{/if}}
-                    {{#if isVideo}}
-                        <video class="thumbnail" width="32" height="32" src="{{path}}?token={{token}}" controls></video>
-                    {{/if}}
-                {{/if}}
+              <button
+                class="btn btn-default"
+                name="start"
+                type="button"
+                title="{{t "Start"}}"
+              >
+                <span class="glyphicon glyphicon-play"></span>
+                <span></span>
+              </button>
             {{/if}}
-        </td>
-        <td>
-            <!-- Absolute file URL -->
-            <a href="{{url}}?token={{token}}" target="_blank">{{name}}</a>
-            <!-- Relative file URL -->
-            <!--<a href="{{path}}?token={{token}}" target="_blank">{{path}}</a>-->
-        </td>
-        <td>{{type}}</td>
-        <td>{{extension}}</td>
-        <td style="text-align: right; white-space: nowrap">{{formatSize size}}</td>
-        <td style="text-align: right">{{progress}}%</td>
-        <td style="text-align: right">
-            {{#if userId}}
-                <span class="label label-private">{{t "Private"}}</span>
-            {{else}}
-                <span class="label label-public">{{t "Public"}}</span>
-            {{/if}}
-        </td>
-        <td style="text-align: right">
-            <div class="btn-group" role="group">
-                {{#if canAbort}}
-                    {{#unless complete}}
-                        {{#if uploading}}
-                            <button class="btn btn-default" name="stop" type="button" title="{{t "Stop"}}">
-                                <span class="glyphicon glyphicon-pause"></span>
-                                <span></span>
-                            </button>
-                        {{else}}
-                            <button class="btn btn-default" name="start" type="button" title="{{t "Start"}}">
-                                <span class="glyphicon glyphicon-play"></span>
-                                <span></span>
-                            </button>
-                        {{/if}}
-                        <button class="btn btn-default" name="abort" type="button" title="{{t "Abort"}}">
-                            <span class="glyphicon glyphicon-remove"></span>
-                            <span></span>
-                        </button>
-                    {{/unless}}
-                {{/if}}
-                {{#if canDelete}}
-                    <button class="btn btn-default" name="delete" type="button" title="{{t "Delete"}}">
-                        <span class="glyphicon glyphicon-trash"></span>
-                        <span></span>
-                    </button>
-                {{/if}}
-            </div>
-        </td>
-    </tr>
+            <button
+              class="btn btn-default"
+              name="abort"
+              type="button"
+              title="{{t "Abort"}}"
+            >
+              <span class="glyphicon glyphicon-remove"></span>
+              <span></span>
+            </button>
+          {{/unless}}
+        {{/if}}
+        {{#if canDelete}}
+          <button
+            class="btn btn-default"
+            name="delete"
+            type="button"
+            title="{{t "Delete"}}"
+          >
+            <span class="glyphicon glyphicon-trash"></span>
+            <span></span>
+          </button>
+        {{/if}}
+      </div>
+    </td>
+  </tr>
 </template>
 
 <template name="spinner">
-    <img width="32" height="32" src="{{absoluteUrl 'spinner.svg'}}">
+  <img
+    width="32"
+    height="32"
+    src="{{absoluteUrl 'spinner.svg'}}"
+  >
 </template>
