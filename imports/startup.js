@@ -29,8 +29,7 @@ import { Meteor } from 'meteor/meteor';
 if (Meteor.isClient) {
   // Load client logic
   require('./client/index');
-}
-else if (Meteor.isServer) {
+} else if (Meteor.isServer) {
   // Load server logic
   require('./server/index');
 }
