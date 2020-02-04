@@ -23,11 +23,13 @@
  *
  */
 
+import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { Files } from '../collections/files';
 
 Meteor.methods({
   deleteFiles(filter) {
+    check(filter, Object);
     return Files.remove(filter);
   },
 });
