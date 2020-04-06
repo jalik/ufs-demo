@@ -1,6 +1,6 @@
 {
   "name": "ufs-demo",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Demo package for UploadFS",
   "dependencies": {
     "@babel/runtime": "^7.8.3",
