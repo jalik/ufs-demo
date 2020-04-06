@@ -4,9 +4,9 @@
   "description": "Demo package for UploadFS",
   "dependencies": {
     "@babel/runtime": "^7.8.3",
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^4.0.1",
     "gm": "^1.23.1",
-    "meteor-node-stubs": "^0.4.1",
+    "meteor-node-stubs": "^1.0.0",
     "spawn-sync": "^2.0.0",
     "thread-sleep": "^2.1.0",
     "try-thread-sleep": "^2.0.0",
