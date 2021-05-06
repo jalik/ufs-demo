@@ -10,7 +10,7 @@
     "spawn-sync": "^2.0.0",
     "thread-sleep": "^2.1.0",
     "try-thread-sleep": "^2.0.0",
-    "underscore": "^1.11.0"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {},
   "repository": {
