@@ -25,6 +25,8 @@
 
 import { Files } from '/imports/api/files/collections/files';
 import { Thumbnails } from '/imports/api/files/collections/thumbnails';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 import { i18n } from 'meteor/jalik:i18n';
 import { UploadFS } from 'meteor/jalik:ufs';
 import { Template } from 'meteor/templating';

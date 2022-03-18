@@ -6,24 +6,12 @@
 </body>
 
 <template name="header">
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button
-          type="button"
-          class="navbar-toggle collapsed"
-          data-toggle="collapse"
-          data-target="#bs-example-navbar-collapse-1"
-          aria-expanded="false"
-        >
-          <span class="sr-only"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+      <div class="navbar-brand">
         <a
-          class="navbar-brand"
+          class="navbar-brand fw-bold"
           href="#"
         >{{t "UploadFS Demo"}}</a>
       </div>
@@ -32,61 +20,74 @@
         class="collapse navbar-collapse"
         id="bs-example-navbar-collapse-1"
       >
-        <div class="navbar-form navbar-left">
+        <ul class="navbar-nav ms-auto">
           {{> uploadForm}}
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li>{{> loginButtons}}</li>
-          <li class="dropdown">
+          <li class="nav-item mx-2">
+            <div class="btn btn-outline-secondary">
+            {{> loginButtons}}
+            </div>
+          </li>
+          <li class="nav-item dropdown">
             <a
               href="#"
-              class="dropdown-toggle"
+              class="nav-link dropdown-toggle"
+              id="nd1"
               role="button"
-              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
               aria-haspopup="true"
-              aria-expanded="true"
             >
-              <span class="glyphicon glyphicon-cog"></span>
               <span>{{t "Actions"}}</span>
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu">
-              <li><a
+            <ul
+              class="dropdown-menu"
+              aria-labelledby="nd1"
+            >
+              <li class="dropdown-item"><a
                 href="#"
                 name="delete-public-files"
               >{{t "Delete public files"}}</a></li>
-              <li><a
+              <li class="dropdown-item"><a
                 href="#"
                 name="delete-private-files"
               >{{t "Delete private files"}}</a></li>
-              <li><a
+              <li class="dropdown-item"><a
                 href="#"
                 name="delete-files"
               >{{t "Delete files"}}</a></li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li class="nav-item dropdown">
             <a
               href="#"
-              class="dropdown-toggle"
+              class="nav-link dropdown-toggle"
               role="button"
-              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="true"
             >
-              <span class="glyphicon glyphicon-book"></span>
               <span>{{t "Documentation"}}</span>
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
               <li class="dropdown-header">{{t "Core"}}</li>
-              <li><a href="https://github.com/jalik/jalik-ufs">UploadFS</a></li>
-              <li class="dropdown-header">{{t "Stores"}}</li>
-              <li><a href="https://github.com/jalik/jalik-ufs-local">Local</a></li>
-              <li><a href="https://github.com/jalik/jalik-ufs-gridfs">GridFS</a></li>
-              <li><a href="https://github.com/sebakerckhof/ufs-wabs">Windows Azure Blob Storage</a>
+              <li class="dropdown-item">
+                <a href="https://github.com/jalik/jalik-ufs">UploadFS</a>
               </li>
-              <li><a href="https://github.com/sebakerckhof/ufs-s3">Amazon S3</a></li>
+              <li class="dropdown-header">{{t "Stores"}}</li>
+              <li class="dropdown-item">
+                <a href="https://github.com/jalik/jalik-ufs-local">Local</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="https://github.com/jalik/jalik-ufs-gridfs">GridFS</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="https://github.com/sebakerckhof/ufs-wabs">Windows Azure Blob Storage</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="https://github.com/sebakerckhof/ufs-s3">Amazon S3</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -112,19 +113,17 @@
 <template name="uploadForm">
   <form>
     <button
-      class="btn btn-default"
+      class="btn btn-primary"
       name="upload"
       type="button"
     >
-      <span class="glyphicon glyphicon-upload"></span>
       <span>{{t "Upload"}}</span>
     </button>
     <button
-      class="btn btn-default"
+      class="btn btn-primary"
       name="import"
       type="button"
     >
-      <span class="glyphicon glyphicon-globe"></span>
       <span>{{t "Import from URL"}}</span>
     </button>
   </form>
@@ -229,9 +228,9 @@
     <td style="text-align: right">{{progress}}%</td>
     <td style="text-align: right">
       {{#if userId}}
-        <span class="label label-private">{{t "Private"}}</span>
+        <span class="badge bg-warning">{{t "Private"}}</span>
       {{else}}
-        <span class="label label-public">{{t "Public"}}</span>
+        <span class="badge bg-success">{{t "Public"}}</span>
       {{/if}}
     </td>
     <td style="text-align: right">
@@ -243,7 +242,7 @@
           {{#unless complete}}
             {{#if uploading}}
               <button
-                class="btn btn-default"
+                class="btn btn-primary btn-sm"
                 name="stop"
                 type="button"
                 title="{{t "Stop"}}"
@@ -253,7 +252,7 @@
               </button>
             {{else}}
               <button
-                class="btn btn-default"
+                class="btn btn-primary btn-sm"
                 name="start"
                 type="button"
                 title="{{t "Start"}}"
@@ -263,7 +262,7 @@
               </button>
             {{/if}}
             <button
-              class="btn btn-default"
+              class="btn btn-outline-danger btn-sm"
               name="abort"
               type="button"
               title="{{t "Abort"}}"
@@ -275,13 +274,13 @@
         {{/if}}
         {{#if canDelete}}
           <button
-            class="btn btn-default"
+            class="btn btn-outline-danger btn-sm"
             name="delete"
             type="button"
             title="{{t "Delete"}}"
           >
             <span class="glyphicon glyphicon-trash"></span>
-            <span></span>
+            <span>Delete</span>
           </button>
         {{/if}}
       </div>
