@@ -24,10 +24,12 @@
  */
 import gm from 'gm';
 import { UploadFS } from 'meteor/jalik:ufs';
-import { LocalStore } from 'meteor/jalik:ufs-local';
+import { GridFSStore } from 'meteor/jalik:ufs-gridfs';
 import { Files } from '../collections/files';
 import { FileReadHandler } from '../lib';
-import { ThumbnailStore } from '../stores/thumbnails';
+import { ThumbnailStore } from './thumbnails';
+
+const DEBUG = false;
 
 /**
  * File filter
@@ -48,7 +50,7 @@ export const FileFilter = new UploadFS.Filter({
  * File store using local file system
  * @type {UploadFS.store.GridFS}
  */
-export const FileStore = new LocalStore({
+export const FileStore = new GridFSStore({
   collection: Files,
   name: 'files',
   path: './uploads/files',
@@ -72,26 +74,26 @@ export const FileStore = new LocalStore({
     ThumbnailStore,
   ],
   onCopyError(err, fileId, file) {
-    console.log(`Store.onCopyError`, file);
-    console.error(err);
+    DEBUG && console.log(`Store.onCopyError`, file);
+    console.error('onCopyError', err);
   },
   onFinishUpload(file) {
-    console.log(`Store.onFinishUpload`, file);
+    DEBUG && console.log(`Store.onFinishUpload`, file);
   },
   onRead(fileId, file, request, response) {
-    console.log(`Store.onRead`, file);
+    DEBUG && console.log(`Store.onRead`, file);
     FileReadHandler(fileId, file, request, request);
   },
   onReadError(err, fileId, file) {
-    console.log(`Store.onReadError`, file);
-    console.error(err);
+    DEBUG && console.log(`Store.onReadError`, file);
+    console.error('onReadError', err);
   },
   onWriteError(err, fileId, file) {
-    console.log(`Store.onWriteError`, file);
-    console.error(err);
+    DEBUG && console.log(`Store.onWriteError`, file);
+    console.error('onWriteError', err);
   },
   onValidate(file) {
-    console.log(`Store.onValidate`, file);
+    DEBUG && console.log(`Store.onValidate`, file);
     // if something is wrong, throw an error
     // throw new Meteor.Error('invalid-file-for-x-reason');
   },
